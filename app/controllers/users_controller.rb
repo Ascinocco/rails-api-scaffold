@@ -5,8 +5,6 @@ class UsersController < ApplicationController
   # POST /signup
   # return authenticated token upon signup
   def create
-    # @TODO: Anthony, I think it would make more sense to make the password check
-    # to be a conern of the model
     if (user_params[:password] != user_params[:password_confirmation])
       return json_response({ message: Message.passwords_do_not_match }, :bad_request)
     end
