@@ -8,4 +8,11 @@ class User < ApplicationRecord
   # Validations
   validates_presence_of :name, :email, :password_digest
   validates :email, presence: true, uniqueness: true
+
+  def get_sanitized_user
+    return {
+      name: self.name,
+      email: self.email
+    };
+  end
 end

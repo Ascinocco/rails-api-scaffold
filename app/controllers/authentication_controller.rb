@@ -6,12 +6,15 @@ class AuthenticationController < ApplicationController
   def authenticate
     email = auth_params[:email]
     password = auth_params[:password]
-
     auth_token = AuthenticateUser.new(email, password).call
-    # @TODO: Anthony get user and return sanitized user on login
-    # user = User.where(email: email)
-    # sanitizedUser = user.get_sanitized_user
-    json_response(auth_token: auth_token)
+    user = User.find_by(email: email)
+
+    json_response({
+      user: {
+        **user.get_sanitized_user,
+        auth_token: auth_token
+      },
+    }, :accepted)
   end
 
   private
